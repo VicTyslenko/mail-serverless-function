@@ -9,6 +9,9 @@ export default async function (req, res) {
   if (isAllowed) {
     res.setHeader("Access-Control-Allow-Origin", origin);
   }
+  
+  res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With");
   const body = req.body;
 
   return res.status(200).json({ message: "Hello from server", body });
