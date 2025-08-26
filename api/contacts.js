@@ -7,7 +7,7 @@ export default async function handler(req, res) {
 
   // const origin = req.headers.origin || "";
   // const isAllowed = ALLOWED_ORIGINS.includes(origin);
-
+  res.setHeader("Access-Control-Allow-Origin", origin);
   // if (isAllowed) {
   //   res.setHeader("Access-Control-Allow-Origin", origin);
   //   // res.setHeader("Vary", "Origin");
