@@ -10,7 +10,9 @@ export default async function handler(req, res) {
 
   if (isAllowed) {
     res.setHeader("Access-Control-Allow-Origin", origin);
+    res.setHeader("Vary", "Origin");
   }
+
   res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With");
 
@@ -19,6 +21,9 @@ export default async function handler(req, res) {
     return res.status(200).end();
   }
 
+  if (req.method !== "POST") {
+    return res.status(405).json({ success: false, message: "Method not allowed" });
+  }
   try {
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
