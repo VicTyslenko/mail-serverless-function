@@ -16,11 +16,9 @@ export default async function handler(req, res) {
   }
 
   // Actual request
-  const { email, name, message } = req.body || {};
+  const body = req.body;
   return res.status(200).json({
     message: "Hello from server",
-    email,
-    name,
-    message,
+    body,
   });
 }
