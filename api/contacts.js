@@ -5,7 +5,7 @@ const ALLOWED_ORIGINS = ["http://localhost:3001", "https://vt-portfolio.info"];
 export default async function handler(req, res) {
   // const { email, name, message } = req.body;
 
-  // const origin = req.headers.origin || "";
+  const origin = req.headers.origin || "";
   // const isAllowed = ALLOWED_ORIGINS.includes(origin);
   res.setHeader("Access-Control-Allow-Origin", origin);
   // if (isAllowed) {
