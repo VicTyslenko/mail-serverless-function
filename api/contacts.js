@@ -1,19 +1,26 @@
 import nodemailer from "nodemailer";
 
+const ALLOWED_ORIGINS = ["http://localhost:3001", "https://vt-portfolio.info"];
+
 export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ message: "Method not allowed" });
-  }
-  const body = req.body || {};
-  const { email, name, message } = body;
-
   const origin = req.headers.origin || "";
+  const isAllowed = ALLOWED_ORIGINS.includes(origin);
 
-  res.setHeader("Access-Control-Allow-Origin", origin);
+  if (isAllowed) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+    res.setHeader("Vary", "Origin");
+  }
+
   res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
   if (req.method === "OPTIONS") return res.status(200).end();
+
+  if (req.method !== "POST") {
+    return res.status(405).json({ message: "Method not allowed" });
+  }
+
+  const { email, name, message } = req.body || {};
 
   try {
     const transporter = nodemailer.createTransport({
