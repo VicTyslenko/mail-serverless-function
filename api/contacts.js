@@ -1,15 +1,13 @@
 import nodemailer from "nodemailer";
 
-const ALLOWED_ORIGINS = ["http://localhost:3001", "https://vt-portfolio.info"];
-
 export default async function handler(req, res) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ message: "Method not allowed" });
+  }
   const body = req.body || {};
   const { email, name, message } = body;
 
   const origin = req.headers.origin || "";
-  // const isAllowed = ALLOWED_ORIGINS.includes(origin);
-
-  // const isAllowed = ALLOWED_ORIGINS.includes(origin);
 
   res.setHeader("Access-Control-Allow-Origin", origin);
   res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
@@ -43,6 +41,7 @@ export default async function handler(req, res) {
     };
 
     await transporter.sendMail(mailOptions);
+
     return res.status(200).json({ success: true, message: "Email sent" });
   } catch (error) {
     return res.status(404).json({ errorMessage: error });
