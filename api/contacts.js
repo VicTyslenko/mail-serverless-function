@@ -3,7 +3,8 @@ import nodemailer from "nodemailer";
 const ALLOWED_ORIGINS = ["http://localhost:3001", "https://vt-portfolio.info"];
 
 export default async function handler(req, res) {
-  const { email, name, message } = req.body;
+  const body = req.body || {};
+  const { email, name, message } = body;
 
   const origin = req.headers.origin || "";
   // const isAllowed = ALLOWED_ORIGINS.includes(origin);
